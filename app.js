@@ -86,7 +86,12 @@ function initializeArt() {
 function handleReleased() {
   if(sound && !sound.isPlaying()){
     sound.play();
-  }
+    sound.fade(0, 20); // 20초에 걸쳐 부드럽게 줄어듬 
+    setTimeout(()=>{
+      sound.stop();
+      sound.setVolume(1);
+    },20000);
+  } 
 }
 
 function draw() {

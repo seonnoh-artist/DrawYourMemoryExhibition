@@ -14,6 +14,9 @@ function checkPassword() {
       document.getElementById('password-form').innerHTML = ''; //html구조제거 
       document.getElementById('art-container').style.display = 'block';
 
+      sound.play();
+      sound.stop();  // 아이폰에서 재생을 위해 꼼수 
+
       initializeArt();
     }, 50); //50~100ms사이 안전 
   } else {
@@ -81,9 +84,10 @@ function initializeArt() {
 }
 
 function handleReleased() {
-  sound.play();
+  if(sound && !sound.isPlaying()){
+    sound.play();
+  }
 }
-
 
 function draw() {
 

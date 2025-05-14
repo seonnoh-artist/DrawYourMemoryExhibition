@@ -3,19 +3,19 @@ let enteredPassword = '';
 
 function checkPassword() {
   enteredPassword = document.getElementById('password').value;
-  
+
   if (enteredPassword === password) {
     //포커스 해제해서 키보드 내려가게 함 
     document.activeElement.blur();
 
     //다음 프레임에 화면을 고정
     setTimeout(() => {
-    document.getElementById('password-form').style.display = 'none';
-    document.getElementById('password-form').innerHTML = ''; //html구조제거 
-    document.getElementById('art-container').style.display = 'block';
- 
-    initializeArt();
-    },50); //50~100ms사이 안전 
+      document.getElementById('password-form').style.display = 'none';
+      document.getElementById('password-form').innerHTML = ''; //html구조제거 
+      document.getElementById('art-container').style.display = 'block';
+
+      initializeArt();
+    }, 50); //50~100ms사이 안전 
   } else {
     alert('Incorrect password');
   }
@@ -29,7 +29,7 @@ let dimension = 0.07;
 let wave_up, wave_down;
 let x_value = 0;
 let curImg;
-let angle = 0; 
+let angle = 0;
 let preImg;
 let starImg = [];
 let starNum = 2;
@@ -39,18 +39,21 @@ let tint_count = 0;
 let imageReady = false;
 let initFrame = null;
 let artInitialized = false;
+let lastTouchtime = 0;
+let touchTimeout = 300; //ms ,  터치 종료로 간주할 시간 
+let touch_chk = false;
 
 
 function preload() {
-  bg = loadImage("data/sea.jpg", 
-    () => { console.log('sea.jpg loaded successfully'); }, 
+  bg = loadImage("data/sea.jpg",
+    () => { console.log('sea.jpg loaded successfully'); },
     () => { console.error('Failed to load sea.jpg'); }
   );
 
-  for(let i=0; i<starNum; i++){
-    starImg[i] = loadImage("data/star"+i+".png", 
-      () => { console.log('star'+i+'.png loaded successfully'); }, 
-      () => { console.error('Failed to load star'+i+'.png'); }
+  for (let i = 0; i < starNum; i++) {
+    starImg[i] = loadImage("data/star" + i + ".png",
+      () => { console.log('star' + i + '.png loaded successfully'); },
+      () => { console.error('Failed to load star' + i + '.png'); }
     );
   }
 
@@ -63,7 +66,7 @@ function preload() {
 function initializeArt() {
   const cnv = createCanvas(windowWidth, windowHeight); // 원래 setup()의 createCanvas() 부분만 여기
   cnv.parent('art-container');
-  cnv.position(0,0); //좌표 틀어짐 방지 
+  cnv.position(0, 0); //좌표 틀어짐 방지 
   resizeCanvas(windowWidth, windowHeight); //강제 크기 재설정
 
   image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER);
@@ -77,16 +80,16 @@ function initializeArt() {
   preImg = get();
 }
 
-function mouseReleased() { 
+function handleReleased() {
   sound.play();
 }
 
 
 function draw() {
 
-  if(!artInitialized) return;
+  if (!artInitialized) return;
 
-  if(!curImg && frameCount >initFrame +1){
+  if (!curImg && frameCount > initFrame + 1) {
     curImg = get();
     curImg.loadPixels();
     preImg = get();
@@ -94,11 +97,11 @@ function draw() {
     return; // 다음 프레임부터터 정상 작동동
   }
 
-  if(!curImg || !curImg.width) return;
-  if(!preImg || !preImg.width) return;
-  
-   curImg = get();
-   curImg.loadPixels();
+  if (!curImg || !curImg.width) return;
+  if (!preImg || !preImg.width) return;
+
+  curImg = get();
+  curImg.loadPixels();
 
   if (tint_count < 10) {
     tint_count += 0.1;
@@ -141,7 +144,16 @@ function draw() {
     image(randomStar, x, y, randomR, randomR);
 
     blend(preImg, 0, 0, curImg.width, curImg.height, 0, 0, width, height, LIGHTEST);
-  } 
+
+    lastTouchtime = millis(); // 마지막 시간을 기록합니다. 
+    touch_chk = true;
+  }
+
+  //터치종료후
+  if (touch_chk && (millis() - lastTouchtime > touchTimeout)) {
+    handleReleased(); // 터치가 끝난 것으로 간주합니다. 
+    touch_chk = false;
+  }
 }
 
 if ('serviceWorker' in navigator) {

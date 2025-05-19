@@ -45,6 +45,7 @@ let artInitialized = false;
 let lastTouchtime = 0;
 let touchTimeout = 300; //ms ,  터치 종료로 간주할 시간 
 let touch_chk = false;
+let exhibition_chk = false;
 
 
 function preload() {
@@ -84,14 +85,14 @@ function initializeArt() {
 }
 
 function handleReleased() {
-  if(sound && !sound.isPlaying()){
+  if (sound && !sound.isPlaying()) {
     sound.play();
     sound.fade(0, 20); // 20초에 걸쳐 부드럽게 줄어듬 
-    setTimeout(()=>{
+    setTimeout(() => {
       sound.stop();
       sound.setVolume(1);
-    },20000);
-  } 
+    }, 20000);
+  }
 }
 
 function draw() {
@@ -111,6 +112,42 @@ function draw() {
 
   curImg = get();
   curImg.loadPixels();
+
+
+  // 전시 시간 설정  9시~22시
+
+  /*
+  let now = hour();
+
+  if (now > 9 && now < 22) {
+    frameRate(60);
+  } else {
+    background(0, 0, 0);  // 전력을 가장 낮춘다. 
+    fill(255, 255, 255);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text('전시 시간이 아닙니다.', width / 2, height / 2);
+    frameRate(1);
+    return;
+  }*/
+
+  //테스트용   
+  let now = minute() % 2;
+
+  if (now >= 0 && now < 1) {
+    if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
+    exhibition_chk = true;
+    frameRate(60);
+  } else {
+    exhibition_chk = false;
+    background(0, 0, 0);  // 전력을 가장 낮춘다. 
+    fill(255, 255, 255);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text('전시 시간이 아닙니다.', width / 2, height / 2);
+    frameRate(1);
+    return;
+  }
 
   if (tint_count < 10) {
     tint_count += 0.1;

@@ -115,13 +115,14 @@ function draw() {
 
 
   // 전시 시간 설정  9시~22시
-
-  /*
   let now = hour();
 
   if (now > 9 && now < 22) {
+    if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
+    exhibition_chk = true;
     frameRate(60);
   } else {
+    exhibition_chk = false;
     background(0, 0, 0);  // 전력을 가장 낮춘다. 
     fill(255, 255, 255);
     textSize(32);
@@ -129,8 +130,9 @@ function draw() {
     text('전시 시간이 아닙니다.', width / 2, height / 2);
     frameRate(1);
     return;
-  }*/
+  }
 
+  /*
   //테스트용   
   let now = minute() % 2;
 
@@ -147,7 +149,7 @@ function draw() {
     text('전시 시간이 아닙니다.', width / 2, height / 2);
     frameRate(1);
     return;
-  }
+  }*/
 
   if (tint_count < 10) {
     tint_count += 0.1;

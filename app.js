@@ -92,11 +92,11 @@ function initializeArt() {
 }
 
 function handleReleased() {
+  if (!sound || isFading || sound.isPlaying()) return;
 
-  if (sound && !sound.isPlaying() && !isFading) {
-    try {
-      sound.setVolume(1);
-      sound.play();
+  try {
+    sound.setVolume(1);
+    sound.play().then(() => {
       isFading = true;
 
       let fadeInterval = setInterval(() => {
@@ -109,26 +109,31 @@ function handleReleased() {
           sound.setVolume(1);
           isFading = false;
         }
-      }, 200);    //20초동안 페이드 아웃 사운드 
-    } catch (e) {
-      console.error("Sound error on handleReleased:", e);
+      }, 200);
+    }).catch((e) => {
+      console.error("Sound play error:", e);
       isFading = false;
-    }
+    });
+
+  } catch (e) {
+    console.error("Sound error on handleReleased:", e);    
+    errMsg = "sound err";
+    errLog();    
+    isFading = false;
   }
 }
 
 function errLog() {
   fill(0);
-  ellipse(width / 2, height / 2, 100, 100);
+  ellipse(width / 2, height / 2, 300, 300);
   fill(255, 255, 255);
   textSize(32);
   textAlign(CENTER, CENTER);
-  errMsg = frameRate().toFixed(1);
   text(errMsg, width / 2, height / 2);
 }
 
 function draw() {
-
+  errMsg = frameRate().toFixed(1);
   errLog();
 
   if (!artInitialized) return;
@@ -145,12 +150,12 @@ function draw() {
   if (!preImg || !preImg.width) return;
 
   if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
-    if(curImg) curImg = null;  // 메모리 제거 
+    if (curImg) curImg = null;  // 메모리 제거 
     curImg = get();
     curImg.loadPixels();
   }
 
-  // 전시 시간 설정  9시~22시
+  // 전시 시간 설정  9시~24시
   let now = hour();
 
   if (now >= 9 && now < 24) {
@@ -187,6 +192,9 @@ function draw() {
     return;
   }*/
 
+  errMsg = "tint count";
+  errLog();
+
   if (tint_count < 10) {
     tint_count += 0.1;
     tint(255, tint_count);
@@ -213,7 +221,12 @@ function draw() {
   fill(p_red, p_green, p_blue, 50);
   ellipse(b_x, b_y, random_r, random_r);
 
+
+
+
   if (mouseIsPressed) {
+    errMsg = "mouse pressed";
+    errLog();
     tint_count = 0;
     let x = mouseX;
     let y = mouseY;
@@ -226,8 +239,11 @@ function draw() {
     let randomStar = random(starImg);
     let randomR = random(30, 70);
     image(randomStar, x, y, randomR, randomR);
-
+    errMsg = "blende start";
+    errLog();
     blend(preImg, 0, 0, curImg.width, curImg.height, 0, 0, width, height, LIGHTEST);
+    errMsg = "blende end";
+    errLog();
 
     lastTouchtime = millis(); // 마지막 시간을 기록합니다. 
     touch_chk = true;
@@ -235,6 +251,8 @@ function draw() {
 
   //터치종료후
   if (touch_chk && (millis() - lastTouchtime > touchTimeout)) {
+    errMsg = "toucn end";
+    errLog();
     handleReleased(); // 터치가 끝난 것으로 간주합니다. 
     touch_chk = false;
   }

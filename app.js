@@ -39,7 +39,6 @@ let starNum = 2;
 let sound;
 let theta = 0;
 let tint_count = 0;
-let imageReady = false;
 let initFrame = null;
 let artInitialized = false;
 let lastTouchtime = 0;
@@ -68,6 +67,10 @@ function preload() {
   );
 }
 
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);  //창 크기가 바뀌었을때 
+}
+
 function initializeArt() {
   const cnv = createCanvas(windowWidth, windowHeight); // 원래 setup()의 createCanvas() 부분만 여기
   cnv.parent('art-container');
@@ -82,7 +85,9 @@ function initializeArt() {
   artInitialized = true;
   initFrame = frameCount;
   curImg = get();
+  curImg.loadPixels();
   preImg = get();
+  preImg.loadPixels();
 }
 
 function handleReleased() {
@@ -114,7 +119,7 @@ function draw() {
 
   if (!artInitialized) return;
 
-  if (!curImg && frameCount > !curImg.pixels) {
+  if (!curImg || !curImg.pixels) {
     curImg = get();
     curImg.loadPixels();
     preImg = get();

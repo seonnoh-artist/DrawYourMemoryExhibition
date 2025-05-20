@@ -46,6 +46,7 @@ let touchTimeout = 300; //ms ,  터치 종료로 간주할 시간
 let touch_chk = false;
 let exhibition_chk = false;
 let isFading = false;
+let errMsg = '';
 
 
 function preload() {
@@ -67,7 +68,7 @@ function preload() {
   );
 }
 
-function windowResized(){
+function windowResized() {
   resizeCanvas(windowWidth, windowHeight);  //창 크기가 바뀌었을때 
 }
 
@@ -115,7 +116,19 @@ function handleReleased() {
   }
 }
 
+function errLog() {
+  fill(0);
+  ellipse(width/2, height/2, 100, 100);
+  fill(255, 255, 255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  errMsg = frameRate().toFixed(1);
+  text(errMsg, width / 2, height / 2);
+}
+
 function draw() {
+
+  errLog();
 
   if (!artInitialized) return;
 
@@ -132,7 +145,6 @@ function draw() {
 
   curImg = get();
   curImg.loadPixels();
-
 
   // 전시 시간 설정  9시~22시
   let now = hour();

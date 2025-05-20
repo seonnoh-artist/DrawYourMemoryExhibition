@@ -92,6 +92,7 @@ function initializeArt() {
 }
 
 function handleReleased() {
+
   if (sound && !sound.isPlaying() && !isFading) {
     try {
       sound.setVolume(1);
@@ -118,7 +119,7 @@ function handleReleased() {
 
 function errLog() {
   fill(0);
-  ellipse(width/2, height/2, 100, 100);
+  ellipse(width / 2, height / 2, 100, 100);
   fill(255, 255, 255);
   textSize(32);
   textAlign(CENTER, CENTER);
@@ -143,13 +144,16 @@ function draw() {
   if (!curImg || !curImg.width) return;
   if (!preImg || !preImg.width) return;
 
-  curImg = get();
-  curImg.loadPixels();
+  if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
+    if(curImg) curImg = null;  // 메모리 제거 
+    curImg = get();
+    curImg.loadPixels();
+  }
 
   // 전시 시간 설정  9시~22시
   let now = hour();
 
-  if (now > 9 && now < 22) {
+  if (now >= 9 && now < 24) {
     if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
     exhibition_chk = true;
     frameRate(60);

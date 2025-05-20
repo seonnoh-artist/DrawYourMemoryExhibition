@@ -99,7 +99,7 @@ function draw() {
 
   if (!artInitialized) return;
 
-  if (!curImg && frameCount > initFrame + 1) {
+  if (!curImg && frameCount > !curImg.pixels) {
     curImg = get();
     curImg.loadPixels();
     preImg = get();

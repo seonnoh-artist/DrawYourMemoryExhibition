@@ -46,6 +46,7 @@ let lastTouchtime = 0;
 let touchTimeout = 300; //ms ,  터치 종료로 간주할 시간 
 let touch_chk = false;
 let exhibition_chk = false;
+let isFading = false;
 
 
 function preload() {
@@ -85,13 +86,27 @@ function initializeArt() {
 }
 
 function handleReleased() {
-  if (sound && !sound.isPlaying()) {
-    sound.play();
-    sound.fade(0, 20); // 20초에 걸쳐 부드럽게 줄어듬 
-    setTimeout(() => {
-      sound.stop();
+  if (sound && !sound.isPlaying() && !isFading) {
+    try {
       sound.setVolume(1);
-    }, 20000);
+      sound.play();
+      isFading = true;
+
+      let fadeInterval = setInterval(() => {
+        let currentVolume = sound.getVolume();
+        if (currentVolume > 0.01) {
+          sound.setVolume(currentVolume - 0.01);
+        } else {
+          clearInterval(fadeInterval);
+          sound.stop();
+          sound.setVolume(1);
+          isFading = false;
+        }
+      }, 200);    //20초동안 페이드 아웃 사운드 
+    } catch (e) {
+      console.error("Sound error on handleReleased:", e);
+      isFading = false;
+    }
   }
 }
 
@@ -199,7 +214,7 @@ function draw() {
 
   //터치종료후
   if (touch_chk && (millis() - lastTouchtime > touchTimeout)) {
-  //  handleReleased(); // 터치가 끝난 것으로 간주합니다. 
+    //  handleReleased(); // 터치가 끝난 것으로 간주합니다. 
     touch_chk = false;
   }
 }

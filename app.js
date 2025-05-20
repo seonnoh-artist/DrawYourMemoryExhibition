@@ -214,7 +214,7 @@ function draw() {
 
   //터치종료후
   if (touch_chk && (millis() - lastTouchtime > touchTimeout)) {
-    //  handleReleased(); // 터치가 끝난 것으로 간주합니다. 
+    handleReleased(); // 터치가 끝난 것으로 간주합니다. 
     touch_chk = false;
   }
 }

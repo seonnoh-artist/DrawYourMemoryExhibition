@@ -92,6 +92,9 @@ function initializeArt() {
 }
 
 function handleReleased() {
+  if(getAudioContext().state !=='running'){
+    getAudioContext().resume();  //오디오를 활성화 
+  }
   if (!sound || isFading || sound.isPlaying()) return;
 
   try {
@@ -124,12 +127,13 @@ function handleReleased() {
 }
 
 function errLog() {
+  /*
   fill(0);
   ellipse(width / 2, height / 2, 300, 300);
   fill(255, 255, 255);
   textSize(32);
   textAlign(CENTER, CENTER);
-  text(errMsg, width / 2, height / 2);
+  text(errMsg, width / 2, height / 2);*/
 }
 
 function draw() {
@@ -155,7 +159,7 @@ function draw() {
     curImg.loadPixels();
   }
 
-  // 전시 시간 설정  9시~24시
+  // 전시 시간 설정  10시~22시
   let now = hour();
 
   if (now >= 9 && now < 24) {

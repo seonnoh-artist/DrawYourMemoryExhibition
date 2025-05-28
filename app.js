@@ -165,7 +165,7 @@ function draw() {
   if (now >= 8 && now < 24) {
     if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
     exhibition_chk = true;
-    frameRate(40);
+    frameRate(30);
   } else {
     exhibition_chk = false;
     background(0, 0, 0);  // 전력을 가장 낮춘다. 

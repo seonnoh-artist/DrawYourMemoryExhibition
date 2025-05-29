@@ -135,7 +135,7 @@ function errLog() {
   textAlign(CENTER, CENTER);
   text(errMsg, width / 2, height / 2);*/
 }
-
+/*5.29 프레임 수정 60->30, 이미지 수정 sea.jpg 원본 .프레임 카운터 30 부분 주석처리*/
 function draw() {
   errMsg = frameRate().toFixed(1);
   errLog();
@@ -153,11 +153,11 @@ function draw() {
   if (!curImg || !curImg.width) return;
   if (!preImg || !preImg.width) return;
 
-  if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
+//  if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
     if (curImg) curImg = null;  // 메모리 제거 
     curImg = get();
     curImg.loadPixels();
-  }
+ // }
 
   // 전시 시간 설정  10시~22시
   let now = hour();

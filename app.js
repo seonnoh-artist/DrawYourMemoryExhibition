@@ -153,11 +153,11 @@ function draw() {
   if (!curImg || !curImg.width) return;
   if (!preImg || !preImg.width) return;
 
-//  if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
-    if (curImg) curImg = null;  // 메모리 제거 
+  if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
+  //  if (curImg) curImg = null;  // 메모리 제거 
     curImg = get();
     curImg.loadPixels();
- // }
+  }
 
   // 전시 시간 설정  10시~22시
   let now = hour();

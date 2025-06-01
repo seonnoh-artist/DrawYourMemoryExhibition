@@ -154,7 +154,7 @@ function draw() {
   if (!preImg || !preImg.width) return;
 
   if (frameCount % 30 === 0) {  // 가끔 부른다....메모리 누수때문에.
-  //  if (curImg) curImg = null;  // 메모리 제거 
+    curImg = null;  // 메모리 제거 
     curImg = get();
     curImg.loadPixels();
   }
@@ -224,7 +224,6 @@ function draw() {
   let random_r = random(80, 200);
   fill(p_red, p_green, p_blue, 50);
   ellipse(b_x, b_y, random_r, random_r);
-
 
 
 

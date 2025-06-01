@@ -1,5 +1,7 @@
 let password = '0000'; // 원하는 비밀번호로 수정
 let enteredPassword = '';
+let startHour = 10; // 전시 시간 설정 
+let endHour = 20;
 
 function checkPassword() {
   enteredPassword = document.getElementById('password').value;
@@ -10,8 +12,12 @@ function checkPassword() {
 
     //다음 프레임에 화면을 고정
     setTimeout(() => {
+      //첫 화면의 패스워드 및 설정시간 폼을 없앤다. 
       document.getElementById('password-form').style.display = 'none';
       document.getElementById('password-form').innerHTML = ''; //html구조제거 
+      document.getElementById('time-setting-form').style.display = 'none';
+      document.getElementById('time-setting-form').innerHTML = ''; //html구조제거 
+
       document.getElementById('art-container').style.display = 'block';
 
       sound.play();
@@ -22,6 +28,40 @@ function checkPassword() {
   } else {
     alert('Incorrect password');
   }
+}
+
+function loadExhibitionTime() {
+  const savedStart = localStorage.getItem('startHour');
+  const savedEnd = localStorage.getItem('endHour');
+  if (savedStart !== null) startHour = parseInt(savedStart);
+  if (savedEnd !== null) endHour = parseInt(savedEnd);
+
+  document.getElementById('start-hour').value = startHour;
+  document.getElementById('end-hour').value = endHour;
+}
+
+function saveExhibitionTime() {
+  const s = parseInt(document.getElementById('start-hour').value);
+  const e = parseInt(document.getElementById('end-hour').value);
+
+
+  if (s < e) {
+    startHour = s;
+    endHour = e;
+    localStorage.setItem('startHour', startHour);
+    localStorage.setItem('endHour', endHour);
+    alert('전시 시간이 ' + startHour + '-' + endHour + '시로 저장되었습니다.');
+  } else {
+    alert('전시 시간 설정이 잘못되었습니다다.');
+  }
+}
+
+function changeHour(type, delta) {
+  const input = document.getElementById(`${type}-hour`);
+  let val = parseInt(input.value || '0') + delta;
+  if (val < 0) val = 24;
+  if (val > 24) val = 0;
+  input.value = val;
 }
 
 // 여기서부터는 원래 p5.js 코드
@@ -137,6 +177,12 @@ function errLog() {
 }
 /*5.29 프레임 수정 60->30, 이미지 수정 sea.jpg 원본 .프레임 카운터 30 부분 주석처리*/
 function draw() {
+  /*
+  fill(255);
+  textSize(20);
+  text("satrtHour: " + startHour, 100, 200);
+  text("endHour: " + endHour, 100, 250);*/
+
   errMsg = frameRate().toFixed(1);
   errLog();
 

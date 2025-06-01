@@ -208,7 +208,7 @@ function draw() {
   // 전시 시간 설정  10시~22시
   let now = hour();
 
-  if (now >= 8 && now < 24) {
+  if (now >= startHour && now < endHour) {
     if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
     exhibition_chk = true;
     frameRate(30);

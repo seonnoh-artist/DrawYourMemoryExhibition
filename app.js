@@ -211,7 +211,7 @@ function draw() {
   if (now >= startHour && now < endHour) {
     if (!exhibition_chk) { image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER); }
     exhibition_chk = true;
-    frameRate(30);
+    frameRate(50);
   } else {
     exhibition_chk = false;
     background(0, 0, 0);  // 전력을 가장 낮춘다. 

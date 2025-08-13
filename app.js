@@ -1,7 +1,7 @@
 let password = '9042'; // 원하는 비밀번호로 수정
 let enteredPassword = '';
-let startHour = 10; // 전시 시간 설정 
-let endHour = 20;
+let startHour = 0; // 전시 시간 설정 
+let endHour = 24;
 
 function checkPassword() {
   enteredPassword = document.getElementById('password').value;
@@ -15,8 +15,8 @@ function checkPassword() {
       //첫 화면의 패스워드 및 설정시간 폼을 없앤다. 
       document.getElementById('password-form').style.display = 'none';
       document.getElementById('password-form').innerHTML = ''; //html구조제거 
-      document.getElementById('time-setting-form').style.display = 'none';
-      document.getElementById('time-setting-form').innerHTML = ''; //html구조제거 
+     // document.getElementById('time-setting-form').style.display = 'none';
+     // document.getElementById('time-setting-form').innerHTML = ''; //html구조제거 
 
       document.getElementById('art-container').style.display = 'block';
 

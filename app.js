@@ -112,11 +112,11 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);  //창 크기가 바뀌었을때 
 }
 
-function initializeArt() {
-  const cnv = createCanvas(windowWidth, windowHeight); // 원래 setup()의 createCanvas() 부분만 여기
+function initializeArt() {     // 2025.8.12  f11 시 캔버스 화면 잘리는 부분.. 강제로 100더해서 맞춰줌. (임시방편)
+  const cnv = createCanvas(windowWidth, windowHeight+100); // 원래 setup()의 createCanvas() 부분만 여기
   cnv.parent('art-container');
   cnv.position(0, 0); //좌표 틀어짐 방지 
-  resizeCanvas(windowWidth, windowHeight); //강제 크기 재설정
+  resizeCanvas(windowWidth, windowHeight+100); //강제 크기 재설정
 
   image(bg, 0, 0, width, height, 0, 0, bg.width, bg.height, COVER);
   wave_up = height / 3;
@@ -177,6 +177,7 @@ function errLog() {
 }
 /*5.29 프레임 수정 60->30, 이미지 수정 sea.jpg 원본 .프레임 카운터 30 부분 주석처리*/
 function draw() {
+
   /*
   fill(255);
   textSize(20);

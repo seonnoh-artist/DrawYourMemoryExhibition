@@ -177,7 +177,8 @@
     window.addEventListener('touchmove', function (e) {
       const path = e.composedPath && e.composedPath();
       const isOnCanvas = path && path.some(el => el.tagName === 'CANVAS');
-      if (!isOnCanvas) e.preventDefault();
+      const isButton = path && path.some(el => el.tagName === 'BUTTON');   // 버튼이 눌릴때는 가능하도록 2025.8
+      if (!isOnCanvas && ! isButton) e.preventDefault();
     }, { passive: false });
 
 

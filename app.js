@@ -3,7 +3,8 @@ let enteredPassword = '';
 let startHour = 0; // 전시 시간 설정 
 let endHour = 24;
 
-function checkPassword() {
+function checkPassword(e) {
+  if(e)  e.stopPropagation();
   //enteredPassword = document.getElementById('password').value;
 
   //if (enteredPassword === password) {

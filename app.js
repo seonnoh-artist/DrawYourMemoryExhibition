@@ -1,22 +1,21 @@
 let password = '9042'; // 원하는 비밀번호로 수정
 let enteredPassword = '';
-let startHour = 0; // 전시 시간 설정 
-let endHour = 24;
+let startHour = 10; // 전시 시간 설정 
+let endHour = 20;
 
-function checkPassword(e) {
-  if(e)  e.stopPropagation();   //이벤트 버블링 문제 대비 (버튼클릭 막힘 방지)
-  //enteredPassword = document.getElementById('password').value;
+function Start() {
+//  enteredPassword = document.getElementById('password').value;
 
   //if (enteredPassword === password) {
     //포커스 해제해서 키보드 내려가게 함 
-    document.activeElement.blur();
+   // document.activeElement.blur();
 
     //다음 프레임에 화면을 고정
     setTimeout(() => {
       //첫 화면의 패스워드 및 설정시간 폼을 없앤다. 
      // document.getElementById('password-form').style.display = 'none';
-      //document.getElementById('password-form').innerHTML = ''; //html구조제거 
-     // document.getElementById('time-setting-form').style.display = 'none';
+     // document.getElementById('password-form').innerHTML = ''; //html구조제거 
+      //document.getElementById('time-setting-form').style.display = 'none';
      // document.getElementById('time-setting-form').innerHTML = ''; //html구조제거 
 
       document.getElementById('art-container').style.display = 'block';
@@ -27,7 +26,7 @@ function checkPassword(e) {
       initializeArt();
     }, 50); //50~100ms사이 안전 
   //} else {
-   // alert('Incorrect password');
+ ////   alert('Incorrect password');
 //  }
 }
 
@@ -52,9 +51,11 @@ function saveExhibitionTime() {
     localStorage.setItem('startHour', startHour);
     localStorage.setItem('endHour', endHour);
     alert('전시 시간이 ' + startHour + '-' + endHour + '시로 저장되었습니다.');
+    Start();   // 전시시작 설정후 화면 시작!
   } else {
     alert('전시 시간 설정이 잘못되었습니다다.');
   }
+  
 }
 
 function changeHour(type, delta) {

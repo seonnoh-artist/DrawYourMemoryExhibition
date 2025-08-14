@@ -4,7 +4,7 @@ let startHour = 0; // 전시 시간 설정
 let endHour = 24;
 
 function checkPassword(e) {
-  if(e)  e.stopPropagation();
+  if(e)  e.stopPropagation();   //이벤트 버블링 문제 대비 (버튼클릭 막힘 방지)
   //enteredPassword = document.getElementById('password').value;
 
   //if (enteredPassword === password) {

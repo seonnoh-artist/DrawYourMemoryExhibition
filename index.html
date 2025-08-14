@@ -30,7 +30,7 @@
       /*스크롤 막기*/
       overscroll-behavior: none;
       /*바운스 풀투리프레시 방지*/
-      touch-action: none;
+      /*touch-action: none;*/
       /*터치동작막기*/
       height: 100%;
       position: flex;
@@ -143,20 +143,24 @@
 
 <body>
 
-    <div id="password-form" class="form-box">
-      <h1>2. Enter Password</h1>
-      <br><br>
-      <p>비밀번호 입력후 실행됩니다.</p>
-      <br><br>
-      <input type="password" id="password" placeholder="Password">
-      <button onclick="checkPassword()">Submit</button>
-    </div>
+  <div id="password-form" class="form-box">
+    <h1>2. Enter Password</h1>
+    <br><br>
+    <p>비밀번호 입력후 실행됩니다.</p>
+    <br><br>
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkPassword()">Submit</button>
+  </div>
   </div>
 
 
   <script>
     // 캔버스 외부 터치에 대해 기본 동작 방지
     window.addEventListener('touchmove', function (e) {
+      const tag = e.target.tagName.toLowerCase();
+      // input, textarea, button 은 터치 차단 안 함
+      if (tag === 'input' || tag === 'textarea' || tag === 'button') return;
+
       const path = e.composedPath && e.composedPath();
       const isOnCanvas = path && path.some(el => el.tagName === 'CANVAS');
       if (!isOnCanvas) e.preventDefault();

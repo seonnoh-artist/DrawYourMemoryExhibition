@@ -252,7 +252,7 @@ function draw() {
     tint_count += 0.1;
     tint(255, tint_count);
 
-    let xOffset = sin(angle) * random(10);
+    let xOffset = sin(angle) *10;// random(10);
     let yOffset = cos(angle) * height / 6;
     angle += 0.05;
 

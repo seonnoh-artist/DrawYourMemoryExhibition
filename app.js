@@ -289,7 +289,7 @@ function draw() {
 
     tint(255, 255);
     let randomStar = random(starImg);
-    let randomR = random(60, 240);
+    let randomR = random(60, 180);
     image(randomStar, x, y, randomR, randomR);
     errMsg = "blende start";
     errLog();

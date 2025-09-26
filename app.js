@@ -275,7 +275,7 @@ function draw() {
   let p_green = curImg.pixels[b_loc + 1];
   let p_blue = curImg.pixels[b_loc + 2];
   //let random_r = random(80, 200);
-  let random_r = random(140, 300);
+  let random_r = random(80*2, 200*2);
   fill(p_red, p_green, p_blue, 50);
   ellipse(b_x, b_y, random_r, random_r);
 

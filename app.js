@@ -257,8 +257,8 @@ function draw() {
     //angle += 0.05;
     //파도 같은 움직임을 위한 오프셋 2025.9.16
     let xOffset = sin(angle)*20; //좌우 파동
-    let yOffset = cos(angle*0.5)*30; //위아래파동(속도 다르게)
-    angle +=0.02; // 파로 흐름 속도 
+    let yOffset = cos(angle*0.8)*height / 6; //위아래파동(속도 다르게)
+    angle +=0.05; // 파로 흐름 속도 
 
     image(preImg, 0 + xOffset, 0 - yOffset, preImg.width + xOffset, preImg.height + yOffset);
 

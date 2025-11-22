@@ -294,7 +294,7 @@ function draw() {
 
     tint(255, 255);
     let randomStar = random(starImg);
-    let randomR = random(60, 140);
+    let randomR = random(30, 70); //30.70(일반)  60.140(tv)
     image(randomStar, x, y, randomR, randomR);
     errMsg = "blende start";
     errLog();

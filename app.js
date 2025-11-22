@@ -92,7 +92,7 @@ let errMsg = '';
 
 
 function preload() {
-  bg = loadImage("data/sea.jpg",
+  bg = loadImage("data/yellow_sea.jpg",
     () => { console.log('sea.jpg loaded successfully'); },
     () => { console.error('Failed to load sea.jpg'); }
   );
